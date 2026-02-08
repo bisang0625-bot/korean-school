@@ -374,7 +374,7 @@
     <!-- Completion Modal -->
     <div id="completeModal" class="modal-overlay" onclick="closeCompleteModal(event)">
         <div class="modal" onclick="event.stopPropagation()">
-            <h3>✅ 나눔 완료</h3>
+            <h3>🔒 거래 종료</h3>
             <p id="modalItemName"></p>
             <input type="password" id="modalPassword" placeholder="등록 시 설정한 비밀번호" autocomplete="off">
             <div class="modal-buttons">
@@ -492,7 +492,7 @@
 
         function showCompleteModal(title, password) {
             currentItemForComplete = { title, password };
-            document.getElementById('modalItemName').textContent = `"${title}" 물품을 나눔 완료 처리하시겠습니까?`;
+            document.getElementById('modalItemName').textContent = `"${title}" 물품의 거래를 종료하시겠습니까?`;
             document.getElementById('modalPassword').value = '';
             document.getElementById('completeModal').classList.add('show');
         }
@@ -515,7 +515,7 @@
                 localStorage.setItem('completedItems', JSON.stringify(completedItems));
                 closeCompleteModal();
                 renderFeed();
-                alert('✅ 나눔 완료 처리되었습니다!');
+                alert('✅ 거래가 종료되었습니다!');
             } else {
                 alert('❌ 비밀번호가 일치하지 않습니다.');
             }
@@ -634,7 +634,7 @@
                             💬 댓글 ${itemComments.length}
                         </button>
                         <div style="display: flex; gap: 8px; align-items: center;">
-                            ${!isCompleted ? `<button class="complete-btn" onclick="showCompleteModal('${escapedTitle}', '${escapedPassword}')">나눔 완료</button>` : ''}
+                            ${!isCompleted ? `<button class="complete-btn" onclick="showCompleteModal('${escapedTitle}', '${escapedPassword}')">거래 종료</button>` : ''}
                             <button id="btn-form-container-${index}" class="reply-btn" onclick="toggleForm('form-container-${index}')">
                                 댓글 달기
                             </button>
