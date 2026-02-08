@@ -6,7 +6,6 @@ import BottomNav from './components/BottomNav';
 import Home from './pages/Home';
 import News from './pages/News';
 import Calendar from './pages/Calendar';
-import Market from './pages/Market';
 import Settings from './pages/Settings';
 import GroupDetail from './pages/GroupDetail';
 import HelpPage from './pages/HelpPage';
@@ -14,6 +13,12 @@ import PrivacyPage from './pages/PrivacyPage';
 import TeacherHome from './pages/TeacherHome';
 import StudentManagement from './pages/StudentManagement';
 import './App.css';
+
+// Redirect to standalone market.html page
+function MarketRedirect() {
+    window.location.href = '/market.html';
+    return null;
+}
 
 function App() {
     return (
@@ -26,7 +31,7 @@ function App() {
                                 <Route path="/" element={<Home />} />
                                 <Route path="/news" element={<News />} />
                                 <Route path="/calendar" element={<Calendar />} />
-                                <Route path="/market" element={<Market />} />
+                                <Route path="/market" element={<MarketRedirect />} />
                                 <Route path="/settings" element={<Settings />} />
                                 <Route path="/group/:id" element={<GroupDetail />} />
                                 <Route path="/help" element={<HelpPage />} />
