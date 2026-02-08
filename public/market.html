@@ -300,7 +300,11 @@
             const url = config.market.postItemUrl;
             if (!url || url === '#' || url.includes('...')) {
                 alert('물품 등록 폼이 아직 설정되지 않았습니다. 관리자에게 문의하세요.');
+            } else if (url.startsWith('/') || url.startsWith('./')) {
+                // Local page - open in same tab
+                window.location.href = url;
             } else {
+                // External URL - open in new tab
                 window.open(url, '_blank', 'noopener,noreferrer');
             }
         }
