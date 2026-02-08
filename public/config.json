@@ -11,12 +11,12 @@
         "commentsCsvUrl": "https://docs.google.com/spreadsheets/d/e/2PACX-1vSpj6LDlYbOnTtZAYCN9l55o4Fja_NvKeNEZojPneGqgrHVcKX6a9y4j6Y4PB7OPSiBx1KtX8tbJHPo/pub?gid=716182683&single=true&output=csv",
         "postItemUrl": "/register-item.html",
         "commentForm": {
-            "actionUrl": "https://docs.google.com/forms/u/0/d/e/YOUR_FORM_ID/formResponse",
-            "itemIdField": "entry.123456789",
-            "nicknameField": "entry.234567890",
-            "messageField": "entry.345678901"
+            "actionUrl": "https://docs.google.com/forms/d/e/1FAIpQLScykaIzllyM1X-lSjZy6a7nyiUkbrkoFeVbzTR6D_mB_0AhBQ/formResponse",
+            "itemIdField": "entry.1376151834",
+            "nicknameField": "entry.2050426938",
+            "messageField": "entry.2051745063"
         },
-        "postCommentUrl": "https://docs.google.com/forms/..."
+        "postCommentUrl": "https://docs.google.com/forms/d/e/1FAIpQLScykaIzllyM1X-lSjZy6a7nyiUkbrkoFeVbzTR6D_mB_0AhBQ/viewform"
     },
     "classes": [
         {
