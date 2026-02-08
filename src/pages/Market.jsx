@@ -192,9 +192,20 @@ export default function Market() {
             <header className="market-header">
                 <div className="header-content">
                     <h1>{t('market.title')} 🛍️</h1>
-                    <a href={POST_ITEM_FORM_URL} target="_blank" rel="noopener noreferrer" className="post-btn" style={{ backgroundColor: defaultColor }}>
+                    <button
+                        className="post-btn"
+                        style={{ backgroundColor: defaultColor }}
+                        onClick={() => {
+                            const url = POST_ITEM_FORM_URL;
+                            if (!url || url === '#' || url.includes('...')) {
+                                alert(t('market.formNotConfigured') || '물품 등록 폼이 아직 설정되지 않았습니다. 관리자에게 문의하세요.');
+                            } else {
+                                window.open(url, '_blank', 'noopener,noreferrer');
+                            }
+                        }}
+                    >
                         {t('market.postItem')}
-                    </a>
+                    </button>
                 </div>
             </header>
 

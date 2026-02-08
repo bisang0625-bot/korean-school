@@ -166,6 +166,7 @@ const en = {
         postItem: 'Post Item',
         loading: 'Loading...',
         noItems: 'No items found',
+        formNotConfigured: 'The item registration form is not configured yet. Please contact the administrator.',
         comments: 'Comments',
         reply: 'Add Comment (Contact)',
         commentPlaceholderNickname: 'Nickname (Ex: Grade 1, John\'s Parent)',

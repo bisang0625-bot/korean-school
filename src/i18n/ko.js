@@ -166,6 +166,7 @@ const ko = {
         postItem: '물품 등록',
         loading: '로딩 중...',
         noItems: '등록된 물품이 없습니다',
+        formNotConfigured: '물품 등록 폼이 아직 설정되지 않았습니다. 관리자에게 문의하세요.',
         comments: '댓글',
         reply: '댓글 달기 (문의하기)',
         commentPlaceholderNickname: '닉네임 (예: 1학년 김철수 학부모)',

@@ -257,8 +257,8 @@
 
     <header class="header">
         <h1>한글학교 나눔 광장 🛍️</h1>
-        <!-- Link to Google Form for Posting Items -->
-        <a href="#" class="post-btn" id="postItemBtn" target="_blank">물품 등록</a>
+        <!-- Button for Posting Items with URL validation -->
+        <button class="post-btn" id="postItemBtn" onclick="handlePostItem()">물품 등록</button>
     </header>
 
     <div id="feed" class="feed">
@@ -289,13 +289,21 @@
                     config.market = { ...config.market, ...data.market };
                 }
                 document.documentElement.style.setProperty('--primary', data.defaultColor || '#E91E63');
-                document.getElementById('postItemBtn').href = config.market.postItemUrl;
                 loadData();
             })
             .catch(err => {
                 console.error('Config load failed, using defaults', err);
                 loadData();
             });
+
+        function handlePostItem() {
+            const url = config.market.postItemUrl;
+            if (!url || url === '#' || url.includes('...')) {
+                alert('물품 등록 폼이 아직 설정되지 않았습니다. 관리자에게 문의하세요.');
+            } else {
+                window.open(url, '_blank', 'noopener,noreferrer');
+            }
+        }
 
         let items = [];
         let comments = [];
