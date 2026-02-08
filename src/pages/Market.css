@@ -1,4 +1,6 @@
 .market-page {
+    padding-top: 70px;
+    /* Clear the fixed header */
     padding-bottom: 80px;
     /* Space for BottomNav */
 }

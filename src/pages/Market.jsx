@@ -188,7 +188,7 @@ export default function Market() {
     }
 
     return (
-        <div className="market-page" style={{ paddingTop: headerHeight + 10 }}>
+        <div className="market-page">
             <header className="market-header">
                 <div className="header-content">
                     <h1>{t('market.title')} 🛍️</h1>
