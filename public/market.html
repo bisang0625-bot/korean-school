@@ -51,6 +51,15 @@
             font-weight: 700;
         }
 
+        .back-home-btn {
+            color: var(--text-primary);
+            text-decoration: none;
+            font-size: 1.5rem;
+            margin-right: 12px;
+            display: flex;
+            align-items: center;
+        }
+
         .feed {
             max-width: 600px;
             margin: 1rem auto;
@@ -406,7 +415,10 @@
 <body>
 
     <header class="header">
-        <h1>한글학교 나눔 광장 🛍️</h1>
+        <div style="display: flex; align-items: center;">
+            <a href="/" class="back-home-btn">←</a>
+            <h1>나눔 광장 🛍️</h1>
+        </div>
         <!-- Button for Posting Items with URL validation -->
         <button class="post-btn" id="postItemBtn" onclick="handlePostItem()">물품 등록</button>
     </header>
