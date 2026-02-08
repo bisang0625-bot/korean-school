@@ -110,7 +110,113 @@
         .badge.completed {
             background-color: #F5F5F5;
             color: #999;
-            text-decoration: line-through;
+        }
+
+        .card.completed {
+            opacity: 0.6;
+        }
+
+        .card.completed .card-image {
+            filter: grayscale(100%);
+        }
+
+        .complete-btn {
+            background: none;
+            border: 1px solid #ccc;
+            color: #666;
+            padding: 0.3rem 0.8rem;
+            border-radius: 15px;
+            font-size: 0.8rem;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .complete-btn:hover {
+            background-color: #4CAF50;
+            border-color: #4CAF50;
+            color: white;
+        }
+
+        /* Completion Modal */
+        .modal-overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.5);
+            z-index: 1000;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .modal-overlay.show {
+            display: flex;
+        }
+
+        .modal {
+            background: white;
+            padding: 24px;
+            border-radius: 16px;
+            max-width: 320px;
+            width: 90%;
+            text-align: center;
+        }
+
+        .modal h3 {
+            margin: 0 0 8px 0;
+            font-size: 1.2rem;
+        }
+
+        .modal p {
+            margin: 0 0 16px 0;
+            color: #666;
+            font-size: 0.9rem;
+        }
+
+        .modal input {
+            width: 100%;
+            padding: 12px;
+            border: 2px solid #ddd;
+            border-radius: 8px;
+            font-size: 16px;
+            box-sizing: border-box;
+            margin-bottom: 16px;
+        }
+
+        .modal input:focus {
+            outline: none;
+            border-color: var(--primary);
+        }
+
+        .modal-buttons {
+            display: flex;
+            gap: 8px;
+        }
+
+        .modal-buttons button {
+            flex: 1;
+            padding: 12px;
+            border-radius: 8px;
+            font-weight: 600;
+            cursor: pointer;
+        }
+
+        .modal-cancel {
+            background: #f5f5f5;
+            border: none;
+            color: #666;
+        }
+
+        .modal-confirm {
+            background: #4CAF50;
+            border: none;
+            color: white;
+        }
+
+        .hidden {
+            display: none !important;
         }
 
         .meta {
@@ -265,6 +371,19 @@
         <div class="loading">로딩 중...</div>
     </div>
 
+    <!-- Completion Modal -->
+    <div id="completeModal" class="modal-overlay" onclick="closeCompleteModal(event)">
+        <div class="modal" onclick="event.stopPropagation()">
+            <h3>✅ 나눔 완료</h3>
+            <p id="modalItemName"></p>
+            <input type="password" id="modalPassword" placeholder="등록 시 설정한 비밀번호" autocomplete="off">
+            <div class="modal-buttons">
+                <button class="modal-cancel" onclick="closeCompleteModal()">취소</button>
+                <button class="modal-confirm" onclick="confirmComplete()">완료 처리</button>
+            </div>
+        </div>
+    </div>
+
     <script>
         // Configuration - Will be loaded from config.json
         let config = {
@@ -311,6 +430,8 @@
 
         let items = [];
         let comments = [];
+        let completedItems = JSON.parse(localStorage.getItem('completedItems') || '[]');
+        let currentItemForComplete = null;
 
         async function loadData() {
             try {
@@ -340,6 +461,7 @@
                 Category: item['Category'] || item['카테고리'] || '기타',
                 ImageURL: item['ImageURL'] || item['사진 URL'] || item['이미지'] || '',
                 Timestamp: item['Timestamp'] || item['타임스탬프'] || '',
+                Password: item['Password'] || item['비밀번호'] || '',
             };
         }
 
@@ -361,6 +483,42 @@
                 headers.forEach((h, i) => entry[h] = values[i] ? values[i].trim() : '');
                 return entry;
             });
+        }
+
+        // ============== 완료 처리 기능 ==============
+        function isItemCompleted(title) {
+            return completedItems.includes(title);
+        }
+
+        function showCompleteModal(title, password) {
+            currentItemForComplete = { title, password };
+            document.getElementById('modalItemName').textContent = `"${title}" 물품을 나눔 완료 처리하시겠습니까?`;
+            document.getElementById('modalPassword').value = '';
+            document.getElementById('completeModal').classList.add('show');
+        }
+
+        function closeCompleteModal(event) {
+            if (event && event.target !== event.currentTarget) return;
+            document.getElementById('completeModal').classList.remove('show');
+            currentItemForComplete = null;
+        }
+
+        function confirmComplete() {
+            if (!currentItemForComplete) return;
+
+            const inputPassword = document.getElementById('modalPassword').value;
+            const storedPassword = currentItemForComplete.password;
+
+            // 비밀번호가 없거나 일치하면 완료 처리
+            if (!storedPassword || inputPassword === storedPassword) {
+                completedItems.push(currentItemForComplete.title);
+                localStorage.setItem('completedItems', JSON.stringify(completedItems));
+                closeCompleteModal();
+                renderFeed();
+                alert('✅ 나눔 완료 처리되었습니다!');
+            } else {
+                alert('❌ 비밀번호가 일치하지 않습니다.');
+            }
         }
 
         function toggleComments(id) {
@@ -437,17 +595,30 @@
 
         function renderFeed() {
             const container = document.getElementById('feed');
-            if (items.length === 0) {
+
+            // 빈 제목 항목 필터링
+            const validItems = items.filter(item => item.Title && item.Title.trim() !== '');
+
+            if (validItems.length === 0) {
                 container.innerHTML = '<div class="loading">등록된 물품이 없습니다.</div>';
                 return;
             }
 
-            container.innerHTML = items.map((item, index) => {
+            // 완료된 항목은 맨 뒤로 정렬
+            const sortedItems = [...validItems].sort((a, b) => {
+                const aCompleted = isItemCompleted(a.Title);
+                const bCompleted = isItemCompleted(b.Title);
+                return aCompleted - bCompleted;
+            });
+
+            container.innerHTML = sortedItems.map((item, index) => {
                 const itemComments = comments.filter(c => c.TargetItemTitle === item.Title);
-                const isCompleted = item.Status === '완료';
+                const isCompleted = isItemCompleted(item.Title);
+                const escapedTitle = item.Title.replace(/'/g, "\\'");
+                const escapedPassword = (item.Password || '').replace(/'/g, "\\'");
 
                 return `
-                <div class="card">
+                <div class="card ${isCompleted ? 'completed' : ''}">
                     ${item.ImageURL ? `<img src="${item.ImageURL}" class="card-image" loading="lazy">` : ''}
                     <div class="card-content">
                         <div class="card-header">
@@ -462,14 +633,17 @@
                         <button class="comment-btn" onclick="toggleComments('comments-${index}')">
                             💬 댓글 ${itemComments.length}
                         </button>
-                        <button id="btn-form-container-${index}" class="reply-btn" onclick="toggleForm('form-container-${index}')">
-                            댓글 달기
-                        </button>
+                        <div style="display: flex; gap: 8px; align-items: center;">
+                            ${!isCompleted ? `<button class="complete-btn" onclick="showCompleteModal('${escapedTitle}', '${escapedPassword}')">나눔 완료</button>` : ''}
+                            <button id="btn-form-container-${index}" class="reply-btn" onclick="toggleForm('form-container-${index}')">
+                                댓글 달기
+                            </button>
+                        </div>
                     </div>
 
                     <!-- Inline Form Container -->
                     <div id="form-container-${index}" class="inline-form">
-                        <form id="form-${index}" onsubmit="submitComment(event, 'form-${index}', '${item.Title}', 'comments-${index}')">
+                        <form id="form-${index}" onsubmit="submitComment(event, 'form-${index}', '${escapedTitle}', 'comments-${index}')">
                             <input type="text" name="nickname" placeholder="닉네임 (예: 1학년 김철수 학부모)" required>
                             <textarea name="message" placeholder="내용을 입력하세요..." required rows="2"></textarea>
                             <div class="form-actions">
