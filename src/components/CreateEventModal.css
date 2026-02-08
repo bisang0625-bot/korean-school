@@ -1,0 +1,90 @@
+.create-event-modal {
+    background: var(--color-white);
+    border-radius: var(--radius-lg) var(--radius-lg) 0 0;
+    width: 100%;
+    max-width: 480px;
+    max-height: 90vh;
+    overflow-y: auto;
+}
+
+.event-form {
+    padding: var(--spacing-lg);
+}
+
+.event-form .form-group {
+    margin-bottom: var(--spacing-lg);
+}
+
+.event-form label {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-xs);
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--color-gray-700);
+    margin-bottom: var(--spacing-sm);
+}
+
+.event-form label svg {
+    color: var(--color-primary);
+}
+
+.form-row {
+    display: flex;
+    gap: var(--spacing-md);
+}
+
+.form-row .form-group {
+    flex: 1;
+}
+
+.event-form input,
+.event-form textarea {
+    width: 100%;
+    padding: var(--spacing-md);
+    border: 1px solid var(--color-gray-300);
+    border-radius: var(--radius-md);
+    font-size: 15px;
+    font-family: var(--font-family);
+    transition: all 0.2s ease;
+}
+
+.event-form input:focus,
+.event-form textarea:focus {
+    outline: none;
+    border-color: var(--color-primary);
+    box-shadow: 0 0 0 3px var(--color-primary-light);
+}
+
+.event-form textarea {
+    resize: vertical;
+    min-height: 80px;
+}
+
+.event-form .submit-btn {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: var(--spacing-xs);
+    padding: var(--spacing-md);
+    background: var(--color-primary);
+    border: none;
+    border-radius: var(--radius-md);
+    font-size: 15px;
+    font-weight: 600;
+    font-family: var(--font-family);
+    color: var(--color-white);
+    cursor: pointer;
+    transition: all 0.2s ease;
+    margin-top: var(--spacing-md);
+}
+
+.event-form .submit-btn:hover:not(:disabled) {
+    background: var(--color-primary-dark);
+}
+
+.event-form .submit-btn:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+}

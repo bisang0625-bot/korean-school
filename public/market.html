@@ -1,0 +1,485 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>한글학교 나눔 광장 - 암스테르담 한글학교</title>
+    <style>
+        :root {
+            --primary: #E91E63;
+            --bg: #F5F7FA;
+            --white: #FFFFFF;
+            --text-primary: #1A1A1A;
+            --text-secondary: #666666;
+            --border: #EEEEEE;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            background-color: var(--bg);
+            margin: 0;
+            padding: 0;
+            padding-bottom: 2rem;
+            color: var(--text-primary);
+        }
+
+        .header {
+            background-color: var(--white);
+            padding: 1rem;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .header h1 {
+            margin: 0;
+            font-size: 1.2rem;
+        }
+
+        .post-btn {
+            background-color: var(--primary);
+            color: white;
+            text-decoration: none;
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            font-size: 0.9rem;
+            font-weight: 700;
+        }
+
+        .feed {
+            max-width: 600px;
+            margin: 1rem auto;
+            padding: 0 1rem;
+        }
+
+        .card {
+            background-color: var(--white);
+            border-radius: 16px;
+            overflow: hidden;
+            margin-bottom: 1rem;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+        }
+
+        .card-image {
+            width: 100%;
+            height: 200px;
+            background-color: #ddd;
+            object-fit: cover;
+        }
+
+        .card-content {
+            padding: 1rem;
+        }
+
+        .card-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 0.5rem;
+        }
+
+        .card-title {
+            margin: 0;
+            font-size: 1.1rem;
+            font-weight: 700;
+            flex: 1;
+        }
+
+        .badge {
+            padding: 2px 8px;
+            border-radius: 6px;
+            font-size: 0.75rem;
+            font-weight: 600;
+        }
+
+        .badge.giveaway {
+            background-color: #E3F2FD;
+            color: #1976D2;
+        }
+
+        .badge.exchange {
+            background-color: #E8F5E9;
+            color: #388E3C;
+        }
+
+        .badge.completed {
+            background-color: #F5F5F5;
+            color: #999;
+            text-decoration: line-through;
+        }
+
+        .meta {
+            font-size: 0.85rem;
+            color: var(--text-secondary);
+            margin-bottom: 0.8rem;
+        }
+
+        .desc {
+            font-size: 0.95rem;
+            line-height: 1.5;
+            margin: 0;
+        }
+
+        .action-area {
+            border-top: 1px solid var(--border);
+            padding: 0.75rem 1rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .comment-btn {
+            background: none;
+            border: none;
+            color: var(--text-secondary);
+            font-weight: 500;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 4px;
+            font-size: 0.9rem;
+        }
+
+        .reply-btn {
+            background-color: var(--primary);
+            color: white;
+            border: none;
+            padding: 0.4rem 1rem;
+            border-radius: 20px;
+            font-weight: 600;
+            text-decoration: none;
+            font-size: 0.9rem;
+            box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+            cursor: pointer;
+        }
+
+        /* Inline Form */
+        .inline-form {
+            display: none;
+            padding: 1rem;
+            border-top: 1px solid var(--border);
+            background-color: #FAFAFA;
+        }
+
+        .inline-form.open {
+            display: block;
+        }
+
+        .inline-form input,
+        .inline-form textarea {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 8px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            font-size: 0.95rem;
+            box-sizing: border-box;
+            font-family: inherit;
+        }
+
+        .form-actions {
+            display: flex;
+            justify-content: flex-end;
+            gap: 8px;
+        }
+
+        .cancel-btn {
+            padding: 6px 12px;
+            border: 1px solid #ddd;
+            background: white;
+            border-radius: 6px;
+            cursor: pointer;
+        }
+
+        .submit-btn {
+            padding: 6px 14px;
+            background-color: var(--primary);
+            color: white;
+            border: none;
+            border-radius: 6px;
+            font-weight: 600;
+            cursor: pointer;
+        }
+
+        /* Comments Section */
+        .comments-section {
+            background-color: #f9f9f9;
+            padding: 1rem;
+            border-top: 1px solid var(--border);
+            display: none;
+        }
+
+        .comments-section.open {
+            display: block;
+        }
+
+        .comment {
+            margin-bottom: 0.8rem;
+            border-bottom: 1px solid #eee;
+            padding-bottom: 0.5rem;
+        }
+
+        .comment.local {
+            background-color: #E3F2FD;
+            padding: 8px;
+            border-radius: 8px;
+        }
+
+        .comment:last-child {
+            border-bottom: none;
+        }
+
+        .comment-author {
+            font-weight: 600;
+            font-size: 0.9rem;
+            margin-bottom: 2px;
+        }
+
+        .comment-text {
+            font-size: 0.9rem;
+            margin: 0;
+        }
+
+        .loading {
+            text-align: center;
+            padding: 2rem;
+            color: var(--text-secondary);
+        }
+    </style>
+</head>
+
+<body>
+
+    <header class="header">
+        <h1>한글학교 나눔 광장 🛍️</h1>
+        <!-- Link to Google Form for Posting Items -->
+        <a href="#" class="post-btn" id="postItemBtn" target="_blank">물품 등록</a>
+    </header>
+
+    <div id="feed" class="feed">
+        <div class="loading">로딩 중...</div>
+    </div>
+
+    <script>
+        // Configuration - Will be loaded from config.json
+        let config = {
+            market: {
+                itemsCsvUrl: 'mock_items.csv', // Default
+                commentsCsvUrl: 'mock_comments.csv', // Default
+                postItemUrl: '#',
+                commentForm: {
+                    actionUrl: '',
+                    itemIdField: '',
+                    nicknameField: '',
+                    messageField: ''
+                }
+            }
+        };
+
+        // Load config from config.json
+        fetch('config.json')
+            .then(res => res.json())
+            .then(data => {
+                if (data.market) {
+                    config.market = { ...config.market, ...data.market };
+                }
+                document.documentElement.style.setProperty('--primary', data.defaultColor || '#E91E63');
+                document.getElementById('postItemBtn').href = config.market.postItemUrl;
+                loadData();
+            })
+            .catch(err => {
+                console.error('Config load failed, using defaults', err);
+                loadData();
+            });
+
+        let items = [];
+        let comments = [];
+
+        async function loadData() {
+            try {
+                const [itemsRes, commentsRes] = await Promise.all([
+                    fetch(config.market.itemsCsvUrl),
+                    fetch(config.market.commentsCsvUrl)
+                ]);
+
+                const itemsText = await itemsRes.text();
+                const commentsText = await commentsRes.text();
+
+                items = parseCSV(itemsText).map(normalizeItem);
+                comments = parseCSV(commentsText).map(normalizeComment);
+                renderFeed();
+            } catch (e) {
+                console.error(e);
+                document.getElementById('feed').innerHTML = '<div class="loading">데이터를 불러오는데 실패했습니다.</div>';
+            }
+        }
+
+        function normalizeItem(item) {
+            return {
+                Title: item['Title'] || item['물품명'] || '',
+                Description: item['Description'] || item['설명'] || '',
+                Type: item['Type'] || item['거래 유형'] || '나눔',
+                Status: item['Status'] || item['거래 상태'] || '거래가능',
+                Category: item['Category'] || item['카테고리'] || '기타',
+                ImageURL: item['ImageURL'] || item['사진 URL'] || item['이미지'] || '',
+                Timestamp: item['Timestamp'] || item['타임스탬프'] || '',
+            };
+        }
+
+        function normalizeComment(comment) {
+            return {
+                TargetItemTitle: comment['TargetItemTitle'] || comment['대상 물품'] || '',
+                Nickname: comment['Nickname'] || comment['닉네임'] || '익명',
+                Message: comment['Message'] || comment['메시지'] || '',
+                Timestamp: comment['Timestamp'] || comment['타임스탬프'] || '',
+            };
+        }
+
+        function parseCSV(text) {
+            const lines = text.trim().split('\n');
+            const headers = lines[0].split(',').map(h => h.trim());
+            return lines.slice(1).map(line => {
+                const values = line.split(',');
+                const entry = {};
+                headers.forEach((h, i) => entry[h] = values[i] ? values[i].trim() : '');
+                return entry;
+            });
+        }
+
+        function toggleComments(id) {
+            const el = document.getElementById(id);
+            if (el.style.display === 'block') {
+                el.style.display = 'none';
+            } else {
+                el.style.display = 'block';
+            }
+        }
+
+        function toggleForm(id) {
+            const el = document.getElementById(id);
+            const btn = document.getElementById('btn-' + id);
+            if (el.style.display === 'block') {
+                el.style.display = 'none';
+                btn.style.display = 'block';
+            } else {
+                el.style.display = 'block';
+                btn.style.display = 'none';
+            }
+        }
+
+        async function submitComment(e, formId, itemTitle, listId) {
+            e.preventDefault();
+            const form = document.getElementById(formId);
+            const nickname = form.querySelector('[name="nickname"]').value;
+            const message = form.querySelector('[name="message"]').value;
+
+            if (!config.market.commentForm.actionUrl) {
+                alert('댓글 폼 설정이 되지 않았습니다. config.json을 확인하세요.');
+                return;
+            }
+
+            const formData = new FormData();
+            formData.append(config.market.commentForm.itemIdField, itemTitle);
+            formData.append(config.market.commentForm.nicknameField, nickname);
+            formData.append(config.market.commentForm.messageField, message);
+
+            const submitBtn = form.querySelector('.submit-btn');
+            const originalText = submitBtn.innerText;
+            submitBtn.innerText = '전송 중...';
+            submitBtn.disabled = true;
+
+            try {
+                await fetch(config.market.commentForm.actionUrl, {
+                    method: 'POST',
+                    mode: 'no-cors',
+                    body: formData
+                });
+
+                // Optimistic Update
+                const list = document.getElementById(listId);
+                const newCommentHtml = `
+                    <div class="comment local">
+                        <div class="comment-author">${nickname}</div>
+                        <p class="comment-text">${message}</p>
+                    </div>
+                `;
+                list.insertAdjacentHTML('afterbegin', newCommentHtml);
+                list.style.display = 'block'; // Ensure list is open
+
+                // Reset Form
+                form.reset();
+                toggleForm(formId.replace('form-', 'form-container-'));
+
+            } catch (err) {
+                alert('전송 실패');
+            } finally {
+                submitBtn.innerText = originalText;
+                submitBtn.disabled = false;
+            }
+        }
+
+        function renderFeed() {
+            const container = document.getElementById('feed');
+            if (items.length === 0) {
+                container.innerHTML = '<div class="loading">등록된 물품이 없습니다.</div>';
+                return;
+            }
+
+            container.innerHTML = items.map((item, index) => {
+                const itemComments = comments.filter(c => c.TargetItemTitle === item.Title);
+                const isCompleted = item.Status === '완료';
+
+                return `
+                <div class="card">
+                    ${item.ImageURL ? `<img src="${item.ImageURL}" class="card-image" loading="lazy">` : ''}
+                    <div class="card-content">
+                        <div class="card-header">
+                            <h3 class="card-title" style="${isCompleted ? 'text-decoration: line-through; color: #999;' : ''}">${item.Title}</h3>
+                            ${isCompleted ? '<span class="badge completed">거래완료</span>' : ''}
+                        </div>
+                        <div class="meta">${item.Category || '기타'} • ${item.Timestamp ? item.Timestamp.split(' ')[0] : ''}</div>
+                        <p class="desc">${item.Description}</p>
+                    </div>
+                    
+                    <div class="action-area">
+                        <button class="comment-btn" onclick="toggleComments('comments-${index}')">
+                            💬 댓글 ${itemComments.length}
+                        </button>
+                        <button id="btn-form-container-${index}" class="reply-btn" onclick="toggleForm('form-container-${index}')">
+                            댓글 달기
+                        </button>
+                    </div>
+
+                    <!-- Inline Form Container -->
+                    <div id="form-container-${index}" class="inline-form">
+                        <form id="form-${index}" onsubmit="submitComment(event, 'form-${index}', '${item.Title}', 'comments-${index}')">
+                            <input type="text" name="nickname" placeholder="닉네임 (예: 1학년 김철수 학부모)" required>
+                            <textarea name="message" placeholder="내용을 입력하세요..." required rows="2"></textarea>
+                            <div class="form-actions">
+                                <button type="button" class="cancel-btn" onclick="toggleForm('form-container-${index}')">취소</button>
+                                <button type="submit" class="submit-btn">전송</button>
+                            </div>
+                        </form>
+                    </div>
+
+                    <div class="comments-section" id="comments-${index}">
+                        ${itemComments.map(c => `
+                            <div class="comment">
+                                <div class="comment-author">${c.Nickname}</div>
+                                <p class="comment-text">${c.Message}</p>
+                            </div>
+                        `).join('')}
+                    </div>
+                </div>
+                `;
+            }).join('');
+        }
+    </script>
+</body>
+
+</html>

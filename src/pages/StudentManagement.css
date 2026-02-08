@@ -1,0 +1,392 @@
+.student-management {
+    min-height: 100vh;
+    background: var(--color-gray-50);
+}
+
+/* Header */
+.management-header {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-md);
+    padding: var(--spacing-md);
+    background: var(--color-white);
+    border-bottom: 1px solid var(--color-gray-200);
+    position: sticky;
+    top: 0;
+    z-index: 100;
+}
+
+.back-btn {
+    background: none;
+    border: none;
+    color: var(--color-gray-700);
+    cursor: pointer;
+    padding: var(--spacing-xs);
+    border-radius: var(--radius-sm);
+    transition: all 0.2s ease;
+}
+
+.back-btn:hover {
+    background: var(--color-gray-100);
+}
+
+.header-title {
+    flex: 1;
+}
+
+.header-title h1 {
+    font-size: 18px;
+    font-weight: 700;
+    color: var(--color-gray-900);
+}
+
+.header-title p {
+    font-size: 13px;
+    color: var(--color-gray-500);
+}
+
+.add-student-btn {
+    width: 40px;
+    height: 40px;
+    background: var(--color-primary);
+    border: none;
+    border-radius: var(--radius-full);
+    color: var(--color-white);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.add-student-btn:hover {
+    background: var(--color-primary-dark);
+    transform: scale(1.05);
+}
+
+/* Stats Bar */
+.stats-bar {
+    display: flex;
+    padding: var(--spacing-md);
+    gap: var(--spacing-sm);
+    background: var(--color-white);
+    border-bottom: 1px solid var(--color-gray-200);
+}
+
+.stat {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: var(--spacing-sm);
+    background: var(--color-gray-50);
+    border-radius: var(--radius-md);
+}
+
+.stat-value {
+    font-size: 22px;
+    font-weight: 700;
+}
+
+.stat-value.present {
+    color: var(--color-success);
+}
+
+.stat-value.absent {
+    color: var(--color-error);
+}
+
+.stat-value.total {
+    color: var(--color-gray-700);
+}
+
+.stat-label {
+    font-size: 12px;
+    color: var(--color-gray-500);
+}
+
+/* Search and Filter */
+.search-filter {
+    padding: var(--spacing-md);
+    background: var(--color-white);
+}
+
+.search-box {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-sm);
+    padding: var(--spacing-sm) var(--spacing-md);
+    background: var(--color-gray-50);
+    border-radius: var(--radius-md);
+    margin-bottom: var(--spacing-sm);
+}
+
+.search-box input {
+    flex: 1;
+    border: none;
+    background: none;
+    font-size: 14px;
+    font-family: var(--font-family);
+    outline: none;
+}
+
+.search-box svg {
+    color: var(--color-gray-400);
+}
+
+.filter-tabs {
+    display: flex;
+    gap: var(--spacing-xs);
+}
+
+.filter-tabs button {
+    flex: 1;
+    padding: var(--spacing-sm) var(--spacing-md);
+    background: var(--color-gray-100);
+    border: none;
+    border-radius: var(--radius-full);
+    font-size: 13px;
+    font-weight: 500;
+    font-family: var(--font-family);
+    color: var(--color-gray-600);
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.filter-tabs button.active {
+    background: var(--color-primary);
+    color: var(--color-white);
+}
+
+/* Student List */
+.student-list {
+    padding: var(--spacing-md);
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-sm);
+    padding-bottom: 100px;
+}
+
+.student-card {
+    background: var(--color-white);
+    border-radius: var(--radius-md);
+    padding: var(--spacing-md);
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-md);
+    box-shadow: var(--shadow-sm);
+    flex-wrap: wrap;
+}
+
+.student-card.absent {
+    opacity: 0.7;
+    border-left: 3px solid var(--color-error);
+}
+
+.student-avatar {
+    width: 44px;
+    height: 44px;
+    background: linear-gradient(135deg, var(--color-primary) 0%, var(--color-secondary) 100%);
+    border-radius: var(--radius-full);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--color-white);
+    font-weight: 600;
+    font-size: 16px;
+}
+
+.student-info {
+    flex: 1;
+    min-width: 120px;
+}
+
+.student-info h3 {
+    font-size: 15px;
+    font-weight: 600;
+    color: var(--color-gray-900);
+    margin-bottom: 2px;
+}
+
+.student-emails {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+}
+
+.student-emails span {
+    font-size: 12px;
+    color: var(--color-gray-500);
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    max-width: 180px;
+}
+
+.student-actions {
+    display: flex;
+    gap: var(--spacing-xs);
+}
+
+.student-actions button {
+    width: 36px;
+    height: 36px;
+    border-radius: var(--radius-sm);
+    border: none;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.2s ease;
+}
+
+.attendance-btn {
+    background: var(--color-gray-100);
+    color: var(--color-gray-500);
+}
+
+.attendance-btn.present {
+    background: #E8F5E9;
+    color: var(--color-success);
+}
+
+.attendance-btn.absent {
+    background: #FFEBEE;
+    color: var(--color-error);
+}
+
+.more-btn {
+    background: var(--color-gray-100);
+    color: var(--color-gray-500);
+}
+
+.more-btn:hover {
+    background: var(--color-gray-200);
+}
+
+/* Expanded Actions */
+.student-expanded {
+    width: 100%;
+    display: flex;
+    gap: var(--spacing-sm);
+    padding-top: var(--spacing-md);
+    border-top: 1px solid var(--color-gray-100);
+    margin-top: var(--spacing-sm);
+}
+
+.student-expanded .action-btn {
+    flex: 1;
+    padding: var(--spacing-sm);
+    border: none;
+    border-radius: var(--radius-sm);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: var(--spacing-xs);
+    font-size: 13px;
+    font-weight: 500;
+    font-family: var(--font-family);
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.action-btn.edit {
+    background: #E3F2FD;
+    color: #1976D2;
+}
+
+.action-btn.delete {
+    background: #FFEBEE;
+    color: var(--color-error);
+}
+
+/* Empty State */
+.empty-state {
+    text-align: center;
+    padding: var(--spacing-xl);
+    color: var(--color-gray-500);
+}
+
+.empty-state button {
+    margin-top: var(--spacing-md);
+    padding: var(--spacing-sm) var(--spacing-lg);
+    background: var(--color-primary);
+    border: none;
+    border-radius: var(--radius-md);
+    color: var(--color-white);
+    font-size: 14px;
+    font-weight: 600;
+    font-family: var(--font-family);
+    cursor: pointer;
+}
+
+/* Student Modal */
+.student-modal {
+    background: var(--color-white);
+    border-radius: var(--radius-lg) var(--radius-lg) 0 0;
+    width: 100%;
+    max-width: 400px;
+}
+
+.student-modal .modal-body {
+    padding: var(--spacing-lg);
+}
+
+.form-group {
+    margin-bottom: var(--spacing-md);
+}
+
+.form-group label {
+    display: block;
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--color-gray-700);
+    margin-bottom: var(--spacing-xs);
+}
+
+.form-group input {
+    width: 100%;
+    padding: var(--spacing-md);
+    border: 2px solid var(--color-gray-200);
+    border-radius: var(--radius-md);
+    font-size: 15px;
+    font-family: var(--font-family);
+    transition: all 0.2s ease;
+}
+
+.form-group input:focus {
+    outline: none;
+    border-color: var(--color-primary);
+}
+
+.email-hint {
+    font-size: 12px;
+    color: var(--color-gray-500);
+    margin-bottom: var(--spacing-lg);
+    padding: var(--spacing-sm);
+    background: var(--color-gray-50);
+    border-radius: var(--radius-sm);
+    line-height: 1.5;
+}
+
+.save-btn {
+    width: 100%;
+    padding: var(--spacing-md);
+    background: var(--color-primary);
+    border: none;
+    border-radius: var(--radius-md);
+    color: var(--color-white);
+    font-size: 15px;
+    font-weight: 600;
+    font-family: var(--font-family);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: var(--spacing-sm);
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.save-btn:hover {
+    background: var(--color-primary-dark);
+}

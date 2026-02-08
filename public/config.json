@@ -1,0 +1,56 @@
+{
+    "schoolName": {
+        "ko": "암스테르담 한글학교",
+        "en": "Amsterdam Korean School"
+    },
+    "academicYear": "2025/2026",
+    "teacherPassword": "2026spring",
+    "defaultColor": "#E91E63",
+    "market": {
+        "itemsCsvUrl": "https://docs.google.com/spreadsheets/d/e/2PACX-1vSpj6LDlYbOnTtZAYCN9l55o4Fja_NvKeNEZojPneGqgrHVcKX6a9y4j6Y4PB7OPSiBx1KtX8tbJHPo/pub?gid=1351459822&single=true&output=csv",
+        "commentsCsvUrl": "https://docs.google.com/spreadsheets/d/e/2PACX-1vSpj6LDlYbOnTtZAYCN9l55o4Fja_NvKeNEZojPneGqgrHVcKX6a9y4j6Y4PB7OPSiBx1KtX8tbJHPo/pub?gid=716182683&single=true&output=csv",
+        "postItemUrl": "https://docs.google.com/forms/...",
+        "commentForm": {
+            "actionUrl": "https://docs.google.com/forms/u/0/d/e/YOUR_FORM_ID/formResponse",
+            "itemIdField": "entry.123456789",
+            "nicknameField": "entry.234567890",
+            "messageField": "entry.345678901"
+        },
+        "postCommentUrl": "https://docs.google.com/forms/..."
+    },
+    "classes": [
+        {
+            "id": 1,
+            "name": "유치반",
+            "nameEn": "Kindergarten"
+        },
+        {
+            "id": 2,
+            "name": "1학년",
+            "nameEn": "Grade 1"
+        },
+        {
+            "id": 3,
+            "name": "2학년",
+            "nameEn": "Grade 2"
+        }
+    ],
+    "groups": [
+        {
+            "id": 1,
+            "name": "전체 공지",
+            "nameEn": "All Announcements"
+        },
+        {
+            "id": 2,
+            "name": "1학년",
+            "nameEn": "Grade 1"
+        },
+        {
+            "id": 3,
+            "name": "2학년",
+            "nameEn": "Grade 2"
+        }
+    ],
+    "teacherEmail": "teacher@koreanschool.nl"
+}

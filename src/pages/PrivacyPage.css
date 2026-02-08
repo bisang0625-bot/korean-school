@@ -1,0 +1,78 @@
+.privacy-page {
+    min-height: 100vh;
+    padding-bottom: 80px;
+}
+
+.privacy-header {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-md);
+    padding: var(--spacing-md);
+    border-bottom: 1px solid var(--color-gray-100);
+    position: sticky;
+    top: 0;
+    background: var(--color-white);
+}
+
+.privacy-header .back-btn {
+    background: none;
+    border: none;
+    color: var(--color-primary);
+    cursor: pointer;
+    padding: var(--spacing-xs);
+}
+
+.privacy-header h1 {
+    font-size: 18px;
+    font-weight: 700;
+}
+
+.privacy-content {
+    padding: var(--spacing-md);
+}
+
+.privacy-section {
+    margin-bottom: var(--spacing-xl);
+}
+
+.privacy-section h2 {
+    font-size: 16px;
+    font-weight: 700;
+    color: var(--color-gray-900);
+    margin-bottom: var(--spacing-md);
+}
+
+.privacy-section p {
+    font-size: 14px;
+    color: var(--color-gray-700);
+    line-height: 1.7;
+    margin-bottom: var(--spacing-sm);
+}
+
+.privacy-section ul {
+    margin-left: var(--spacing-lg);
+    margin-top: var(--spacing-sm);
+}
+
+.privacy-section li {
+    font-size: 14px;
+    color: var(--color-gray-700);
+    line-height: 1.7;
+    margin-bottom: var(--spacing-xs);
+}
+
+.privacy-section .contact-info {
+    background: var(--color-gray-50);
+    padding: var(--spacing-md);
+    border-radius: var(--radius-md);
+    margin-top: var(--spacing-md);
+}
+
+.last-updated {
+    text-align: center;
+    font-size: 12px;
+    color: var(--color-gray-500);
+    padding: var(--spacing-lg);
+    border-top: 1px solid var(--color-gray-100);
+    margin-top: var(--spacing-xl);
+}

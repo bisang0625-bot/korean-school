@@ -1,0 +1,16 @@
+.app-container {
+  max-width: 480px;
+  margin: 0 auto;
+  min-height: 100vh;
+  background: var(--color-white);
+  position: relative;
+  padding-bottom: 80px;
+  box-shadow: 0 0 40px rgba(0, 0, 0, 0.1);
+}
+
+@media (max-width: 480px) {
+  .app-container {
+    max-width: 100%;
+    box-shadow: none;
+  }
+}

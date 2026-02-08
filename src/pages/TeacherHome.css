@@ -1,0 +1,279 @@
+.teacher-home {
+    min-height: 100vh;
+    padding-bottom: 100px;
+}
+
+.teacher-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: var(--spacing-lg);
+    background: linear-gradient(135deg, var(--color-primary) 0%, var(--color-secondary) 100%);
+    color: var(--color-white);
+}
+
+.no-class-message {
+    text-align: center;
+    padding: var(--spacing-xl);
+    background: var(--color-gray-50);
+    border-radius: var(--radius-lg);
+}
+
+.no-class-message p {
+    font-size: 15px;
+    color: var(--color-gray-600);
+    margin-bottom: var(--spacing-md);
+}
+
+.select-class-btn {
+    padding: var(--spacing-sm) var(--spacing-lg);
+    background: var(--color-primary);
+    border: none;
+    border-radius: var(--radius-md);
+    color: var(--color-white);
+    font-size: 14px;
+    font-weight: 600;
+    font-family: var(--font-family);
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.select-class-btn:hover {
+    background: var(--color-primary-dark);
+}
+
+.teacher-info {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-md);
+}
+
+.teacher-avatar {
+    width: 50px;
+    height: 50px;
+    background: rgba(255, 255, 255, 0.2);
+    border-radius: var(--radius-full);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 28px;
+}
+
+.teacher-text h1 {
+    font-size: 18px;
+    font-weight: 700;
+}
+
+.teacher-text p {
+    font-size: 13px;
+    opacity: 0.9;
+}
+
+.settings-btn {
+    background: rgba(255, 255, 255, 0.2);
+    border: none;
+    color: var(--color-white);
+    padding: var(--spacing-sm);
+    border-radius: var(--radius-full);
+    cursor: pointer;
+}
+
+/* Sections */
+.teacher-home .section {
+    padding: var(--spacing-md);
+}
+
+.section-title {
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--color-gray-500);
+    text-transform: uppercase;
+    margin-bottom: var(--spacing-md);
+}
+
+/* Class Card */
+.class-card {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-md);
+    width: 100%;
+    padding: var(--spacing-md);
+    background: var(--color-white);
+    border: 1px solid var(--color-gray-200);
+    border-radius: var(--radius-lg);
+    cursor: pointer;
+    transition: all 0.2s ease;
+    font-family: var(--font-family);
+    text-align: left;
+}
+
+.class-card:hover {
+    box-shadow: var(--shadow-md);
+}
+
+.class-icon {
+    width: 48px;
+    height: 48px;
+    border-radius: var(--radius-md);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--color-white);
+}
+
+.class-info {
+    flex: 1;
+}
+
+.class-info h3 {
+    font-size: 16px;
+    font-weight: 700;
+    color: var(--color-gray-900);
+}
+
+.class-info p {
+    font-size: 13px;
+    color: var(--color-gray-500);
+}
+
+.class-card .arrow {
+    color: var(--color-gray-400);
+}
+
+/* Attendance Summary */
+.attendance-summary {
+    display: flex;
+    gap: var(--spacing-md);
+    margin-top: var(--spacing-md);
+}
+
+.change-class-btn {
+    width: 100%;
+    margin-top: var(--spacing-sm);
+    padding: var(--spacing-sm) var(--spacing-md);
+    background: var(--color-gray-100);
+    border: 1px dashed var(--color-gray-300);
+    border-radius: var(--radius-md);
+    font-size: 13px;
+    font-weight: 500;
+    color: var(--color-gray-600);
+    font-family: var(--font-family);
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.change-class-btn:hover {
+    background: var(--color-gray-200);
+    border-color: var(--color-gray-400);
+}
+
+.attendance-item {
+    flex: 1;
+    padding: var(--spacing-md);
+    background: var(--color-gray-50);
+    border-radius: var(--radius-md);
+    text-align: center;
+}
+
+.attendance-item .count {
+    display: block;
+    font-size: 24px;
+    font-weight: 700;
+}
+
+.attendance-item .label {
+    font-size: 12px;
+    color: var(--color-gray-500);
+}
+
+.attendance-item.present .count {
+    color: #4CAF50;
+}
+
+.attendance-item.absent .count {
+    color: #F44336;
+}
+
+.attendance-item.total .count {
+    color: var(--color-gray-700);
+}
+
+/* Quick Actions Grid */
+.quick-actions-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: var(--spacing-md);
+}
+
+.quick-action-card {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: var(--spacing-sm);
+    padding: var(--spacing-lg);
+    background: var(--color-white);
+    border: 1px solid var(--color-gray-200);
+    border-radius: var(--radius-lg);
+    cursor: pointer;
+    transition: all 0.2s ease;
+    font-family: var(--font-family);
+}
+
+.quick-action-card:hover {
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-md);
+}
+
+.action-icon {
+    width: 48px;
+    height: 48px;
+    border-radius: var(--radius-full);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--color-white);
+}
+
+.quick-action-card span {
+    font-size: 13px;
+    font-weight: 500;
+    color: var(--color-gray-700);
+}
+
+/* Activity List */
+.activity-list {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-md);
+}
+
+.activity-item {
+    display: flex;
+    align-items: flex-start;
+    gap: var(--spacing-md);
+    padding: var(--spacing-md);
+    background: var(--color-gray-50);
+    border-radius: var(--radius-md);
+}
+
+.activity-dot {
+    width: 10px;
+    height: 10px;
+    border-radius: var(--radius-full);
+    margin-top: 4px;
+}
+
+.activity-content {
+    flex: 1;
+}
+
+.activity-content p {
+    font-size: 14px;
+    font-weight: 500;
+    color: var(--color-gray-800);
+}
+
+.activity-content span {
+    font-size: 12px;
+    color: var(--color-gray-500);
+}

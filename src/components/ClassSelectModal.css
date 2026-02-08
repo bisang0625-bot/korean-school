@@ -1,0 +1,85 @@
+.class-select-modal {
+    background: var(--color-white);
+    border-radius: var(--radius-lg) var(--radius-lg) 0 0;
+    width: 100%;
+    max-width: 480px;
+    max-height: 80vh;
+    overflow-y: auto;
+}
+
+.class-select-modal .modal-body {
+    padding: var(--spacing-lg);
+}
+
+.select-description {
+    text-align: center;
+    color: var(--color-gray-600);
+    margin-bottom: var(--spacing-lg);
+}
+
+.class-list {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-sm);
+}
+
+.class-option {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-md);
+    padding: var(--spacing-md);
+    background: var(--color-gray-50);
+    border: 2px solid transparent;
+    border-radius: var(--radius-md);
+    cursor: pointer;
+    transition: all 0.2s ease;
+    text-align: left;
+    font-family: var(--font-family);
+    width: 100%;
+}
+
+.class-option:hover {
+    background: var(--color-white);
+    border-color: var(--color-gray-200);
+    box-shadow: var(--shadow-sm);
+}
+
+.class-option.selected {
+    background: var(--color-primary-light);
+    border-color: var(--color-primary);
+}
+
+.class-option .class-icon {
+    width: 48px;
+    height: 48px;
+    border-radius: var(--radius-md);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--color-white);
+}
+
+.class-option .class-details {
+    flex: 1;
+}
+
+.class-option .class-name {
+    display: block;
+    font-size: 16px;
+    font-weight: 600;
+    color: var(--color-gray-900);
+}
+
+.class-option .class-students {
+    font-size: 13px;
+    color: var(--color-gray-500);
+}
+
+.selected-badge {
+    padding: 4px 10px;
+    background: var(--color-primary);
+    color: var(--color-white);
+    border-radius: var(--radius-full);
+    font-size: 12px;
+    font-weight: 600;
+}

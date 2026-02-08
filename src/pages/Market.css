@@ -1,0 +1,356 @@
+.market-page {
+    padding-bottom: 80px;
+    /* Space for BottomNav */
+}
+
+.loading-state {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 60vh;
+    color: var(--color-gray-500);
+}
+
+.loading-spinner {
+    width: 40px;
+    height: 40px;
+    border: 3px solid #f3f3f3;
+    border-radius: 50%;
+    border-top: 3px solid #3498db;
+    animation: spin 1s linear infinite;
+    margin-bottom: 1rem;
+}
+
+@keyframes spin {
+    0% {
+        transform: rotate(0deg);
+    }
+
+    100% {
+        transform: rotate(360deg);
+    }
+}
+
+.market-header {
+    background-color: var(--color-white);
+    padding: 1rem;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 100;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+}
+
+.header-content {
+    max-width: 600px;
+    margin: 0 auto;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.header-content h1 {
+    margin: 0;
+    font-size: 1.25rem;
+    color: var(--color-gray-900);
+}
+
+.post-btn {
+    color: white;
+    border: none;
+    padding: 0.5rem 1rem;
+    border-radius: 20px;
+    font-weight: 600;
+    text-decoration: none;
+    font-size: 0.9rem;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    transition: transform 0.2s;
+}
+
+.post-btn:active {
+    transform: scale(0.95);
+}
+
+.market-feed {
+    max-width: 600px;
+    margin: 0 auto;
+    padding: 1rem;
+}
+
+.no-items {
+    text-align: center;
+    padding: 4rem 1rem;
+    color: var(--color-gray-400);
+}
+
+.market-card {
+    background-color: var(--color-white);
+    border-radius: 16px;
+    overflow: hidden;
+    margin-bottom: 1rem;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+    border: 1px solid var(--color-gray-100);
+}
+
+.card-image {
+    width: 100%;
+    height: 200px;
+    background-color: var(--color-gray-100);
+}
+
+.card-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.card-content {
+    padding: 1rem;
+}
+
+.card-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: 0.5rem;
+}
+
+.card-title {
+    margin: 0;
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: var(--color-gray-900);
+    flex: 1;
+    margin-right: 0.5rem;
+}
+
+.card-title.completed {
+    color: var(--color-gray-400);
+    text-decoration: line-through;
+}
+
+.badge {
+    padding: 2px 8px;
+    border-radius: 6px;
+    font-size: 0.75rem;
+    font-weight: 600;
+    white-space: nowrap;
+}
+
+.badge.type-giveaway {
+    background-color: #E3F2FD;
+    color: #1976D2;
+}
+
+.badge.type-exchange {
+    background-color: #E8F5E9;
+    color: #388E3C;
+}
+
+.badge.status-completed {
+    background-color: var(--color-gray-100);
+    color: var(--color-gray-500);
+}
+
+.card-meta {
+    font-size: 0.85rem;
+    color: var(--color-gray-500);
+    margin-bottom: 0.75rem;
+    display: flex;
+    gap: 0.5rem;
+}
+
+.card-desc {
+    margin: 0;
+    font-size: 0.95rem;
+    line-height: 1.5;
+    color: var(--color-gray-700);
+}
+
+.card-actions {
+    border-top: 1px solid var(--color-gray-100);
+    padding: 0.75rem 1rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.comment-toggle-btn {
+    background: none;
+    border: none;
+    font-weight: 500;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 0.9rem;
+    padding: 6px 10px;
+    border-radius: 8px;
+    color: var(--color-gray-600);
+    transition: background-color 0.2s;
+}
+
+.comment-toggle-btn:hover {
+    background-color: var(--color-gray-50);
+}
+
+.reply-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 6px 14px;
+    border-radius: 20px;
+    color: white;
+    font-weight: 600;
+    font-size: 0.9rem;
+    text-decoration: none;
+    border: none;
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+    transition: all 0.2s;
+}
+
+.reply-btn:active {
+    transform: scale(0.95);
+    opacity: 0.9;
+}
+
+/* Comments Section */
+.comments-section {
+    background-color: var(--color-gray-50);
+    padding: 1rem;
+    border-top: 1px solid var(--color-gray-100);
+}
+
+.comment-item {
+    margin-bottom: 0.75rem;
+    padding-bottom: 0.75rem;
+    border-bottom: 1px solid var(--color-gray-200);
+}
+
+.comment-item:last-child {
+    border-bottom: none;
+    margin-bottom: 0;
+    padding-bottom: 0;
+}
+
+.comment-author {
+    font-weight: 700;
+    font-size: 0.9rem;
+    margin-bottom: 2px;
+    color: var(--color-gray-800);
+}
+
+.comment-text {
+    font-size: 0.9rem;
+    margin: 0;
+    color: var(--color-gray-700);
+}
+
+.add-comment-link {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    padding: 0.85rem;
+    border-radius: 12px;
+    text-decoration: none;
+    font-weight: 700;
+    font-size: 1rem;
+    transition: all 0.2s;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.add-comment-link.filled {
+    color: white !important;
+    border: none;
+}
+
+.add-comment-link:active {
+    transform: scale(0.98);
+    opacity: 0.9;
+}
+
+/* Inline Comment Form */
+.inline-comment-form {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    animation: fadeIn 0.3s ease;
+    width: 100%;
+    margin-top: 10px;
+}
+
+.comment-input,
+.comment-textarea {
+    width: 100%;
+    padding: 12px;
+    border: 1px solid var(--color-gray-300);
+    border-radius: 8px;
+    font-size: 0.95rem;
+    font-family: inherit;
+    box-sizing: border-box;
+}
+
+.comment-textarea {
+    resize: vertical;
+    min-height: 80px;
+}
+
+.form-actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: 8px;
+}
+
+.cancel-btn {
+    padding: 8px 16px;
+    border: 1px solid var(--color-gray-300);
+    background: white;
+    border-radius: 8px;
+    cursor: pointer;
+    font-weight: 500;
+    color: var(--color-gray-600);
+}
+
+.submit-btn {
+    padding: 8px 20px;
+    border: none;
+    border-radius: 8px;
+    color: white;
+    font-weight: 600;
+    cursor: pointer;
+}
+
+.comment-item.local {
+    background-color: #E3F2FD;
+    padding: 12px;
+    border-radius: 8px;
+    animation: highlight 2s ease;
+    margin-bottom: 0.75rem;
+    border: 1px solid #BBDEFB;
+}
+
+@keyframes highlight {
+    0% {
+        background-color: #BBDEFB;
+    }
+
+    100% {
+        background-color: #E3F2FD;
+    }
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(-5px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
