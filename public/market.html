@@ -142,6 +142,114 @@
             font-weight: 500;
         }
 
+        /* Detail Modal Styles */
+        .detail-modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.85);
+            z-index: 2000;
+            overflow-y: auto;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+            box-sizing: border-box;
+        }
+
+        .detail-modal.show {
+            display: flex;
+        }
+
+        .detail-content {
+            background-color: white;
+            width: 100%;
+            max-width: 600px;
+            border-radius: 16px;
+            overflow: hidden;
+            position: relative;
+            max-height: 90vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .detail-header {
+            padding: 1rem;
+            border-bottom: 1px solid var(--border);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: sticky;
+            top: 0;
+            background: white;
+            z-index: 10;
+        }
+
+        .detail-close {
+            background: none;
+            border: none;
+            font-size: 1.5rem;
+            cursor: pointer;
+            padding: 5px;
+        }
+
+        .detail-body {
+            padding: 0;
+            overflow-y: auto;
+        }
+
+        .detail-image-container {
+            width: 100%;
+            background: #000;
+            display: flex;
+            justify-content: center;
+        }
+
+        .detail-image {
+            width: 100%;
+            max-height: 500px;
+            object-fit: contain;
+        }
+
+        .detail-info {
+            padding: 1.5rem;
+        }
+
+        .detail-desc {
+            white-space: pre-wrap;
+            line-height: 1.6;
+            margin: 1rem 0;
+            font-size: 1rem;
+        }
+
+        .detail-comments-section {
+            background-color: #f9f9f9;
+            padding: 1.5rem;
+            border-top: 1px solid var(--border);
+        }
+
+        /* Preview Card Styles Update */
+        .card {
+            cursor: pointer;
+            transition: transform 0.2s;
+        }
+
+        .card:hover {
+            transform: translateY(-2px);
+        }
+
+        .desc {
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            line-clamp: 2;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+            color: #666;
+            margin-bottom: 0.5rem;
+        }
+
         .toggle-switch {
             position: relative;
             width: 50px;
@@ -440,6 +548,19 @@
         </div>
     </div>
 
+    <!-- Detail Modal -->
+    <div id="detailModal" class="detail-modal" onclick="closeDetailModal(event)">
+        <div class="detail-content" onclick="event.stopPropagation()">
+            <div class="detail-header">
+                <h3 style="margin:0">상세 정보</h3>
+                <button class="detail-close" onclick="closeDetailModal()">×</button>
+            </div>
+            <div class="detail-body" id="detailBody">
+                <!-- Content will be injected here -->
+            </div>
+        </div>
+    </div>
+
     <script>
         // Configuration - Will be loaded from config.json
         let config = {
@@ -609,8 +730,10 @@
                 return;
             }
 
+            const rawTitle = itemTitle.replace(/\\'/g, "'");
+
             const formData = new FormData();
-            formData.append(config.market.commentForm.itemIdField, itemTitle);
+            formData.append(config.market.commentForm.itemIdField, rawTitle);
             formData.append(config.market.commentForm.nicknameField, nickname);
             formData.append(config.market.commentForm.messageField, message);
 
@@ -632,17 +755,28 @@
                     <div class="comment local">
                         <div class="comment-author">${nickname}</div>
                         <p class="comment-text">${message}</p>
+                        <div class="comment-date">방금 전</div>
                     </div>
                 `;
-                list.insertAdjacentHTML('afterbegin', newCommentHtml);
-                list.style.display = 'block'; // Ensure list is open
+                if (list) {
+                    list.insertAdjacentHTML('afterbegin', newCommentHtml);
+                }
+
+                // Update global comments array so counts update on refresh
+                comments.push({
+                    TargetItemTitle: rawTitle,
+                    Nickname: nickname,
+                    Message: message,
+                    Timestamp: new Date().toLocaleString()
+                });
 
                 // Reset Form
                 form.reset();
-                toggleForm(formId.replace('form-', 'form-container-'));
+                // No need to toggle form in modal
 
             } catch (err) {
                 alert('전송 실패');
+                console.error(err);
             } finally {
                 submitBtn.innerText = originalText;
                 submitBtn.disabled = false;
@@ -667,14 +801,15 @@
                 return aCompleted - bCompleted;
             });
 
+            // Store for modal access
+            window.currentItems = sortedItems;
+
             container.innerHTML = sortedItems.map((item, index) => {
                 const itemComments = comments.filter(c => c.TargetItemTitle === item.Title);
                 const isCompleted = isItemCompleted(item.Title);
-                const escapedTitle = item.Title.replace(/'/g, "\\'");
-                const escapedPassword = (item.Password || '').replace(/'/g, "\\'");
 
                 return `
-                <div class="card ${isCompleted ? 'completed' : ''}">
+                <div class="card ${isCompleted ? 'completed' : ''}" onclick="openDetail(${index})">
                     ${item.ImageURL ? `<img src="${item.ImageURL}" class="card-image" loading="lazy">` : ''}
                     <div class="card-content">
                         <div class="card-header">
@@ -683,47 +818,83 @@
                         </div>
                         <div class="meta">${item.Category || '기타'} • ${item.Timestamp ? item.Timestamp.split(' ')[0] : ''}</div>
                         <p class="desc">${item.Description}</p>
-                    </div>
                     
-                    <div class="action-area">
-                        <button class="comment-btn" onclick="toggleComments('comments-${index}')">
-                            💬 댓글 ${itemComments.length}
-                        </button>
-                        <div style="display: flex; gap: 12px; align-items: center;">
-                            <div class="status-toggle" ${!isCompleted ? `onclick="showCompleteModal('${escapedTitle}', '${escapedPassword}')"` : ''}>
-                                <span class="status-text ${isCompleted ? 'done' : 'active'}">${isCompleted ? '완료' : '거래중'}</span>
-                                <div class="toggle-switch ${isCompleted ? 'completed' : ''}"></div>
-                            </div>
-                            <button id="btn-form-container-${index}" class="reply-btn" onclick="toggleForm('form-container-${index}')">
-                                댓글 달기
-                            </button>
+                        <div style="display: flex; gap: 8px; margin-top: 10px; font-size: 0.85rem; color: #666;">
+                            <span>💬 댓글 ${itemComments.length}</span>
+                            ${isCompleted ? '<span>• 거래종료</span>' : '<span style="color:var(--primary)">• 거래중</span>'}
                         </div>
-                    </div>
-
-                    <!-- Inline Form Container -->
-                    <div id="form-container-${index}" class="inline-form">
-                        <form id="form-${index}" onsubmit="submitComment(event, 'form-${index}', '${escapedTitle}', 'comments-${index}')">
-                            <input type="text" name="nickname" placeholder="닉네임 (예: 1학년 김철수 학부모)" required>
-                            <textarea name="message" placeholder="내용을 입력하세요..." required rows="2"></textarea>
-                            <div class="form-actions">
-                                <button type="button" class="cancel-btn" onclick="toggleForm('form-container-${index}')">취소</button>
-                                <button type="submit" class="submit-btn">전송</button>
-                            </div>
-                        </form>
-                    </div>
-
-                    <div class="comments-section" id="comments-${index}">
-                        ${itemComments.map(c => `
-                            <div class="comment">
-                                <div class="comment-author">${c.Nickname}</div>
-                                <p class="comment-text">${c.Message}</p>
-                            </div>
-                        `).join('')}
                     </div>
                 </div>
                 `;
             }).join('');
         }
+
+        function openDetail(index) {
+            const item = window.currentItems[index];
+            if (!item) return;
+
+            const itemComments = comments.filter(c => c.TargetItemTitle === item.Title);
+            const isCompleted = isItemCompleted(item.Title);
+            const escapedTitle = item.Title.replace(/'/g, "\\'");
+            const escapedPassword = (item.Password || '').replace(/'/g, "\\'");
+
+            const modalBody = document.getElementById('detailBody');
+
+            modalBody.innerHTML = `
+                <div class="detail-image-container">
+                    ${item.ImageURL ? `<img src="${item.ImageURL}" class="detail-image">` : '<div style="padding:40px; color:white;">이미지 없음</div>'}
+                </div>
+                <div class="detail-info">
+                    <div style="display: flex; justify-content: space-between; align-items: start; margin-bottom: 1rem;">
+                        <h2 style="margin: 0; flex: 1; font-size: 1.4rem; ${isCompleted ? 'text-decoration: line-through; color: #999;' : ''}">${item.Title}</h2>
+                        
+                        <div class="status-toggle" ${!isCompleted ? `onclick="showCompleteModal('${escapedTitle}', '${escapedPassword}')"` : ''} style="margin-left: 10px;">
+                            <span class="status-text ${isCompleted ? 'done' : 'active'}">${isCompleted ? '완료' : '거래중'}</span>
+                            <div class="toggle-switch ${isCompleted ? 'completed' : ''}"></div>
+                        </div>
+                    </div>
+                    
+                    <div class="meta">${item.Category || '기타'} • ${item.Timestamp}</div>
+                    <div class="detail-desc">${item.Description}</div>
+                </div>
+
+                <div class="detail-comments-section">
+                    <h4 style="margin-top: 0; margin-bottom: 1rem;">💬 댓글 (${itemComments.length})</h4>
+                    
+                    <!-- Comment Form -->
+                    <div class="inline-form" style="display: block; margin-bottom: 1.5rem;">
+                        <form id="modal-comment-form" onsubmit="submitComment(event, 'modal-comment-form', '${escapedTitle}', 'modal-comments-list')">
+                            <input type="text" name="nickname" placeholder="닉네임" required style="margin-bottom: 8px;">
+                            <textarea name="message" placeholder="댓글 내용..." required rows="2"></textarea>
+                            <div class="form-actions">
+                                <button type="submit" class="submit-btn" style="width: 100%;">등록</button>
+                            </div>
+                        </form>
+                    </div>
+
+                    <!-- Comment List -->
+                    <div id="modal-comments-list">
+                        ${itemComments.map(c => `
+                            <div class="comment">
+                                <div class="comment-author">${c.Nickname || '익명'}</div>
+                                <p class="comment-text">${c.Message}</p>
+                                <div class="comment-date">${c.Timestamp ? c.Timestamp.split(' ')[0] : ''}</div>
+                            </div>
+                        `).join('') || '<p style="color:#999; text-align:center;">첫 댓글을 남겨보세요!</p>'}
+                    </div>
+                </div>
+            `;
+
+            document.getElementById('detailModal').classList.add('show');
+            document.body.style.overflow = 'hidden'; // Prevent background scrolling
+        }
+
+        function closeDetailModal() {
+            document.getElementById('detailModal').classList.remove('show');
+            document.body.style.overflow = '';
+            renderFeed(); // Refresh feed to update comment counts/status
+        }
+
     </script>
 </body>
 
