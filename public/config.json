@@ -9,7 +9,7 @@
     "market": {
         "itemsCsvUrl": "https://docs.google.com/spreadsheets/d/e/2PACX-1vSpj6LDlYbOnTtZAYCN9l55o4Fja_NvKeNEZojPneGqgrHVcKX6a9y4j6Y4PB7OPSiBx1KtX8tbJHPo/pub?gid=1351459822&single=true&output=csv",
         "commentsCsvUrl": "https://docs.google.com/spreadsheets/d/e/2PACX-1vSpj6LDlYbOnTtZAYCN9l55o4Fja_NvKeNEZojPneGqgrHVcKX6a9y4j6Y4PB7OPSiBx1KtX8tbJHPo/pub?gid=716182683&single=true&output=csv",
-        "postItemUrl": "https://docs.google.com/forms/...",
+        "postItemUrl": "https://docs.google.com/forms/d/1kZdpBIyCVMN3F6cYzPWgDV0XXaNcDebIA2ik0PjmH5I/viewform",
         "commentForm": {
             "actionUrl": "https://docs.google.com/forms/u/0/d/e/YOUR_FORM_ID/formResponse",
             "itemIdField": "entry.123456789",
