@@ -292,6 +292,14 @@
                 <p class="hint">📱 휴대폰에서는 카메라로 바로 촬영도 가능해요!</p>
             </div>
 
+            <!-- 비밀번호 -->
+            <div class="form-group">
+                <label for="password" class="required">비밀번호</label>
+                <input type="password" id="password" name="password" placeholder="나눔 완료 시 사용할 비밀번호" required
+                    minlength="4">
+                <p class="hint">🔒 나눔 완료 처리 시 본인 확인용으로 사용됩니다</p>
+            </div>
+
             <!-- 제출 -->
             <button type="submit" class="submit-btn" id="submitBtn">등록하기</button>
 
@@ -312,6 +320,7 @@
             ENTRY_CATEGORY: "entry.699611176",     // 카테고리
             ENTRY_DESCRIPTION: "entry.286220523",  // 설명
             ENTRY_IMAGE_URL: "entry.1319291925",   // 사진 URL
+            ENTRY_PASSWORD: "entry.1592472368",    // 비밀번호
 
             // ImgBB API 키
             IMGBB_API_KEY: "3ebdd1088182dc26013542a02ff2e0d9"
@@ -368,11 +377,12 @@
             return data.data.url;
         }
 
-        async function submitToGoogleForm(title, category, description, imageUrl) {
+        async function submitToGoogleForm(title, category, description, imageUrl, password) {
             const formData = new FormData();
             formData.append(CONFIG.ENTRY_TITLE, title);
             formData.append(CONFIG.ENTRY_CATEGORY, category);
             formData.append(CONFIG.ENTRY_DESCRIPTION, description);
+            formData.append(CONFIG.ENTRY_PASSWORD, password);
             if (imageUrl) {
                 formData.append(CONFIG.ENTRY_IMAGE_URL, imageUrl);
             }
@@ -390,9 +400,15 @@
             const title = document.getElementById('title').value.trim();
             const category = document.getElementById('category').value;
             const description = document.getElementById('description').value.trim();
+            const password = document.getElementById('password').value;
 
-            if (!title || !category || !description) {
+            if (!title || !category || !description || !password) {
                 showStatus('모든 필수 항목을 입력해주세요', 'error');
+                return;
+            }
+
+            if (password.length < 4) {
+                showStatus('비밀번호는 4자리 이상이어야 합니다', 'error');
                 return;
             }
 
@@ -408,7 +424,7 @@
 
                 // 2. 구글 폼 제출
                 showStatus('물품 등록 중...', 'loading');
-                await submitToGoogleForm(title, category, description, uploadedImageUrl);
+                await submitToGoogleForm(title, category, description, uploadedImageUrl, password);
 
                 // 3. 완료
                 showStatus('✅ 등록 완료! 잠시 후 장터에 표시됩니다.', 'success');
